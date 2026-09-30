@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenV AI Video Generator</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080808;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #222;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #7c3aed;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 850px;
+      margin: 40px auto;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #aaa;
+      font-size: 16px;
+    }
+
+    .card {
+      background: #111;
+      border: 1px solid #292929;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      font-weight: bold;
+    }
+
+    textarea,
+    select,
+    input[type="file"] {
+      width: 100%;
+      background: #181818;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .generate {
+      width: 100%;
+      margin-top: 25px;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: #7c3aed;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .generate:hover {
+      background: #6d28d9;
+    }
+
+    .status {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #181818;
+      text-align: center;
+      color: #bbb;
+    }
+
+    .preview {
+      display: none;
+      margin-top: 25px;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 14px;
+      background: black;
+    }
+
+    .download {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #16a34a;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .notice {
+      margin-top: 20px;
+      color: #888;
+      font-size: 13px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    @media(max-width:600px) {
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="logo">GenV <span>AI</span></div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <h1>Create AI Videos</h1>
+      <p>Turn your ideas and images into amazing AI videos.</p>
+    </section>
+
+    <section class="card">
+
+      <label>Upload Image</label>
+      <input type="file" id="imageInput" accept="image/*">
+
+      <label>AI Video Prompt</label>
+      <textarea
+        id="prompt"
+        placeholder="Describe the video you want to create..."
+      ></textarea>
+
+      <div class="row">
+
+        <div>
+          <label>Duration</label>
+          <select id="duration">
+            <option value="5">5 Seconds</option>
+            <option value="8">8 Seconds</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Aspect Ratio</label>
+          <select id="ratio">
+            <option value="16:9">16:9 Landscape</option>
+            <option value="9:16">9:16 Portrait</option>
+            <option value="1:1">1:1 Square</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="generate" onclick="generateVideo()">
+        ✨ Generate AI Video
+      </button>
+
+      <div class="status" id="status">
+        Preparing your AI video...
+      </div>
+
+      <div class="preview" id="preview">
+        <video id="videoPlayer" controls></video>
+        <a class="download" id="downloadBtn" download>
+          ⬇ Download Video
+        </a>
+      </div>
+
+      <div class="notice">
+        AI video generation may take some time depending on the selected model.
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+
+    function generateVideo() {
+
+      const prompt = document.getElementById("prompt").value.trim();
+      const image = document.getElementById("imageInput").files[0];
+
+      if (!prompt) {
+        alert("Please enter a video prompt.");
+        return;
+      }
+
+      if (!image) {
+        alert("Please upload an image.");
+        return;
+      }
+
+      const status = document.getElementById("status");
+
+      status.style.display = "block";
+
+      status.innerHTML =
+        "⏳ Your AI video request is being prepared...";
+
+      /*
+        AI API connection will be added in the next step.
+
+        IMPORTANT:
+        Never put your private AI API key inside this
+        index.html file.
+      */
+
+      setTimeout(() => {
+
+        status.innerHTML =
+          "✅ Website is ready. AI API connection will be added next.";
+
+      }, 1500);
+    }
+
+  </script>
+
+</body>
+  </html>
